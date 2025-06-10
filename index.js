@@ -23,7 +23,7 @@ function toggleContrast() {
   }
 }
 
-async function contact() {
+async function contact(event) {
   event.preventDefault();
   const loading = document.querySelector(".modal__overlay--loading");
   const success = document.querySelector(".modal__overlay--success");
