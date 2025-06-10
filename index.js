@@ -2,6 +2,9 @@ let isModalOpen = false;
 let contrastToggle = false;
 const scaleFactor = 1 / 20;
 
+const loading = document.querySelector(".modal__overlay--loading");
+const success = document.querySelector(".modal__overlay--success");
+
 function moveBackground(event) {
   const shapes = document.querySelectorAll(".shape");
   const x = event.clientX * scaleFactor;
@@ -25,21 +28,17 @@ function toggleContrast() {
 
 async function contact(event) {
   event.preventDefault();
-  const loading = document.querySelector(".modal__overlay--loading");
-  const success = document.querySelector(".modal__overlay--success");
   loading.classList += " modal__overlay--visible";
 
-  await emailjs.sendForm(
-    `service_h347dtm`,
-    `template_x7lefb21`,
-    event.target,
-    `ng1O_z-aVjtL9YlYq`
-  );
-  loading.classList.remove("modal__overlay--visible"),
-    (success.classList += " modal__overlay--visible");
-
   try {
-    contact();
+    await emailjs.sendForm(
+      `service_h347dtm`,
+      `template_x7lefb21`,
+      event.target,
+      `ng1O_z-aVjtL9YlYq`
+    );
+    loading.classList.remove("modal__overlay--visible"),
+      (success.classList += " modal__overlay--visible");
   } catch {
     loading.classList.remove("modal__overlay--visible");
     alert(
@@ -49,10 +48,15 @@ async function contact(event) {
 }
 
 function toggleModal() {
+  const form = document.getElementById("contact__form");
   if (isModalOpen) {
     isModalOpen = false;
-    return document.body.classList.remove("modal--open");
+    document.body.classList.remove("modal--open");
+    if (form) form.reset();
+    if (loading) loading.classList.remove("modal__overlay--visible");
+    if (success) success.classList.remove("modal__overlay--visible");
+    return;
   }
   isModalOpen = true;
-  document.body.classList += " modal--open";
+  document.body.classList.add("modal--open");
 }
