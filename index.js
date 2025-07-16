@@ -37,8 +37,8 @@ async function contact(event) {
       event.target,
       `ng1O_z-aVjtL9YlYq`
     );
-    loading.classList.remove("modal__overlay--visible"),
-      success.classList.add(" modal__overlay--visible");
+    loading.classList.remove("modal__overlay--visible");
+    success.classList.add("modal__overlay--visible");
   } catch {
     loading.classList.remove("modal__overlay--visible");
     alert(
